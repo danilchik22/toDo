@@ -6,9 +6,9 @@ import ToDoList from './ToDo';
 
 const Head = () => {
     return (
-        <div className="head">
+        <div className="main">
             <nav>
-                <ul>
+                <ul className="head">
                     <li> <Link to="/users"> All users </Link> </li>
                     <li> <Link to="/projects"> Projects </Link> </li>
                     <li> <Link to="/todos"> ToDoLists </Link> </li>

@@ -39,7 +39,7 @@ const ItemToDo = ({ todo, projects, users }) => {
 
 const ToDoList = ({ projects, users, todos }) => {
     return (
-        <table>
+        <table className="tableComponents">
             <thead>
                 <tr>
                     <th>

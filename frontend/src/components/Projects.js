@@ -30,12 +30,13 @@ const ItemProject = ({ project, users }) => {
             </tr>
         </tbody>
 
+
     )
 }
 
 const Projects = ({ projects, users }) => {
     return (
-        <table>
+        <table className="tableComponents">
             <thead>
                 <tr>
                     <th>

@@ -16,7 +16,7 @@ const User = ({ user }) => {
 
 const UserList = ({ users }) => {
     return (
-        <table>
+        <table className="tableComponents">
             <thead>
                 <tr>
                     <th key="{username}">
