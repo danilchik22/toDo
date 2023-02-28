@@ -4,13 +4,16 @@ import Users from './Users'
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-const Main = ({ year }) => {
-    return (
-        <div>
-            <Head />
-            <Footer year={year} />
-        </div>
-    )
+class Main extends React.Component {
+    render() {
+        return (
+            <div>
+                <Head auth={() => this.props.auth()} logout={() => this.props.logout()} />
+                <Footer year />
+            </div>
+        )
+    }
+
 
 }
 
