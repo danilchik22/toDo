@@ -161,6 +161,7 @@ REST_FRAMEWORK = {
         
     ]
 }
+#from rest_framework.permissions import IsAuthenticated
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),

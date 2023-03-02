@@ -23,6 +23,7 @@ class App extends React.Component {
       'projects': [],
       'todos': [],
       'token': "",
+
     }
   }
 
@@ -34,7 +35,14 @@ class App extends React.Component {
 
   logout() {
     this.set_token("");
-    this.setState({ "token": "" })
+    this.setState({
+      'users': [],
+      'year': new Date().getFullYear(),
+      'projects': [],
+      'todos': [],
+      'token': "",
+    }
+    )
   }
 
   get_token_from_cookie() {
@@ -54,7 +62,6 @@ class App extends React.Component {
   }
 
   is_authenticated() {
-    console.log('isss')
     return this.state.token != "";
   }
 
