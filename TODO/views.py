@@ -4,8 +4,9 @@ from rest_framework.response import Response
 
 from .filters import ProjectFilter, TODOFilterDate
 from .models import TODO, Project
-from .serializers import ProjectModelSerializer, TODOModelSerializer, BaseProjectModelSerializer
 from .permissions import IsOwnerOrReadOnly
+from .serializers import (BaseProjectModelSerializer, ProjectModelSerializer,
+                          TODOModelSerializer)
 
 
 class ProjectLimitOffsetPagination(LimitOffsetPagination):
@@ -21,10 +22,10 @@ class ProjectModelViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectModelSerializer
     pagination_class = ProjectLimitOffsetPagination
     filterset_class = ProjectFilter
-    #permission_classes = [IsOwnerOrReadOnly]
+    # permission_classes = [IsOwnerOrReadOnly]
 
     def get_serializer_class(self):
-        if self.request.method in ['GET']:
+        if self.request.method in ["GET"]:
             return ProjectModelSerializer
         return BaseProjectModelSerializer
 

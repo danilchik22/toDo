@@ -22,61 +22,65 @@ class App extends React.Component {
       'year': new Date().getFullYear(),
       'projects': [],
       'todos': [],
+      'nameuser': "",
       'token': "",
+
 
     }
   }
 
-  set_token(token) {
+  setToken(token) {
     let cookie = new Cookies();
     cookie.set('token', token);
     this.state.token = token;
   }
 
   logout() {
-    this.set_token("");
+    this.setToken("");
     this.setState({
       'users': [],
       'year': new Date().getFullYear(),
       'projects': [],
       'todos': [],
       'token': "",
+      'nameuser': "",
     }
     )
   }
 
-  get_token_from_cookie() {
+  getTokenFromCookie() {
     const cookie = new Cookies();
     const token = cookie.get('token');
-    this.setState({ "token": token }, () => this.load_data())
+    this.setState({ "token": token }, () => this.loadData())
   }
 
-  get_token(username, password) {
+  getToken(nameuser, password) {
     axios.post('http://127.0.0.1:8000/api-token-auth/',
-      { username: username, password: password }).then(response => {
-        this.set_token(response.data.token);
-        this.setState({ "token": response.data.token })
+      { username: nameuser, password: password }).then(response => {
+        this.setToken(response.data.token);
+        this.setState({ "token": response.data.token, "nameuser": nameuser })
+        console.log(nameuser)
       }).catch(error => alert("Неверный логин или пароль")
       )
 
   }
 
-  is_authenticated() {
-    return this.state.token != "";
+  isAuthenticated() {
+    return !!this.state.token;
   }
 
-  get_headers() {
+  getHeaders() {
     let headers = {
       'Content-Type': 'application/json'
     }
-    if (this.is_authenticated()) {
+    if (this.isAuthenticated()) {
       headers["Authorization"] = 'Token' + ' ' + this.state.token
     }
     return headers
   }
 
-  load_data() {
-    const headers = this.get_headers()
+  loadData() {
+    const headers = this.getHeaders()
     axios.get('http://127.0.0.1:8000/api/users/', { headers }).then(response => {
       this.setState(
         {
@@ -101,7 +105,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.get_token_from_cookie()
+    this.getTokenFromCookie()
   }
 
   render() {
@@ -110,11 +114,11 @@ class App extends React.Component {
 
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Main year={this.state.year} auth={() => this.is_authenticated()} logout={() => this.logout()} />}>
+            <Route path="/" element={<Main nameuser={this.state.username} year={this.state.year} auth={() => this.isAuthenticated()} logout={() => this.logout()} />}>
               <Route path="projects" element={<Projects users={this.state.users} projects={this.state.projects} />}>
                 <Route path="projects/:id" element={<ProjectDetail projects={this.state.projects} users={this.state.users} />} />
               </Route>
-              <Route path="login" element={<Login get_token={(username, password) => this.get_token(username, password)} />} />
+              <Route path="login" element={<Login get_token={(username, password) => this.getToken(username, password)} />} />
               <Route path="users" element={<UserList users={this.state.users} />} />
               <Route path="todos" element={<ToDoList users={this.state.users} todos={this.state.todos} projects={this.state.projects} />} />
             </Route>

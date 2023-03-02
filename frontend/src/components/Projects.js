@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 const ItemProject = ({ project, users }) => {
 
     function changeUsers(user_proj) {
-        let us = users.find(item => item.id === user_proj)
+        let us = users.find(item => item.id === user_proj.id)
         us = us.username + ', '
         return us
     }
+    console.log(project)
     let usersProject = project.users.map(changeUsers)
 
 

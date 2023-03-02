@@ -8,7 +8,7 @@ class Main extends React.Component {
     render() {
         return (
             <div>
-                <Head auth={() => this.props.auth()} logout={() => this.props.logout()} />
+                <Head nameuser={this.props.nameuser} auth={() => this.props.auth()} logout={() => this.props.logout()} />
                 <Footer year />
             </div>
         )

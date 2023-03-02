@@ -5,7 +5,9 @@ import UserList from './Users';
 import ToDoList from './ToDo';
 
 class Head extends React.Component {
+
     render() {
+        console.log(this.props.nameuser)
         return (
             <div className="main">
                 <nav>
@@ -14,7 +16,7 @@ class Head extends React.Component {
                         <li> <Link to="/projects"> Projects </Link> </li>
                         <li> <Link to="/todos"> ToDoLists </Link> </li>
                         <li>
-                            {this.props.auth() ? <button onClick={() => this.props.logout()}> Logout <br /> User:  </button> : <Link to="/login"> Login </Link>}
+                            {this.props.auth() ? <button onClick={() => this.props.logout()}> Logout <br /> User: {this.props.nameuser} </button> : <Link to="/login"> Login </Link>}
                         </li>
 
 
