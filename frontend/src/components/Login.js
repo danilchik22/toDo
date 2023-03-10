@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import { Navigate } from 'react-router-dom'
 
 class Login extends React.Component {
     constructor(props) {
@@ -20,6 +21,7 @@ class Login extends React.Component {
         event.preventDefault()
     }
     render() {
+        if (this.props.auth()) return <Navigate to="/" />
         return (
             <form onSubmit={(event) => this.handleSubmit(event)}>
                 <input type="text" name="login" placeholder="login"

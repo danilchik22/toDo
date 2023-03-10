@@ -5,9 +5,7 @@ import UserList from './Users';
 import ToDoList from './ToDo';
 
 class Head extends React.Component {
-
     render() {
-        console.log(this.props.nameuser)
         return (
             <div className="main">
                 <nav>

@@ -16,7 +16,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Project",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("name", models.CharField(max_length=128)),
                 ("url", models.URLField(verbose_name="url")),
                 ("users", models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
@@ -25,12 +33,29 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="TODO",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("text", models.TextField()),
                 ("created_at", models.DateField(auto_now_add=True)),
                 ("updated_at", models.DateField(auto_now=True)),
-                ("project", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="TODO.project")),
-                ("user", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "project",
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="TODO.project"),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

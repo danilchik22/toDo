@@ -3,8 +3,7 @@ import json
 from django.test import TestCase
 from mixer.backend.django import mixer
 from rest_framework import status
-from rest_framework.test import (APIClient, APIRequestFactory, APITestCase,
-                                 force_authenticate)
+from rest_framework.test import APIClient, APIRequestFactory, APITestCase, force_authenticate
 
 from users.models import CustomUser
 
@@ -75,5 +74,8 @@ class TestToDOModelViewSet(APITestCase):
         project = mixer.blend(Project)
         user = mixer.blend(CustomUser)
         self.client.force_authenticate(self.admin)
-        response = self.client.post(self.url, {"text": "Привет", "project": f"{project.id}", "user": f"{user.id}"})
+        response = self.client.post(
+            self.url,
+            {"text": "Привет", "project": f"{project.id}", "user": f"{user.id}"},
+        )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)

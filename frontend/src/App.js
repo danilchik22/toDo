@@ -58,7 +58,7 @@ class App extends React.Component {
     axios.post('http://127.0.0.1:8000/api-token-auth/',
       { username: nameuser, password: password }).then(response => {
         this.setToken(response.data.token);
-        this.setState({ "token": response.data.token, "nameuser": nameuser })
+        this.setState({ "token": `${response.data.token}`, "nameuser": `${nameuser}` })
         console.log(nameuser)
       }).catch(error => alert("Неверный логин или пароль")
       )
@@ -108,17 +108,18 @@ class App extends React.Component {
     this.getTokenFromCookie()
   }
 
+
   render() {
     return (
       <div className='container'>
 
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Main nameuser={this.state.username} year={this.state.year} auth={() => this.isAuthenticated()} logout={() => this.logout()} />}>
+            <Route path="/" element={<Main nameuser={this.state.nameuser} year={this.state.year} auth={() => this.isAuthenticated()} logout={() => this.logout()} />}>
               <Route path="projects" element={<Projects users={this.state.users} projects={this.state.projects} />}>
                 <Route path="projects/:id" element={<ProjectDetail projects={this.state.projects} users={this.state.users} />} />
               </Route>
-              <Route path="login" element={<Login get_token={(username, password) => this.getToken(username, password)} />} />
+              <Route path="login" element={<Login auth={() => this.isAuthenticated()} get_token={(username, password) => this.getToken(username, password)} />} />
               <Route path="users" element={<UserList users={this.state.users} />} />
               <Route path="todos" element={<ToDoList users={this.state.users} todos={this.state.todos} projects={this.state.projects} />} />
             </Route>
