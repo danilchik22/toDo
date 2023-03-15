@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import include, path, re_path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
+from graphene_django.views import GraphQLView
 from rest_framework import permissions
 from rest_framework.authtoken import views
 from rest_framework.routers import DefaultRouter
@@ -37,4 +38,5 @@ urlpatterns = [
     path("api-token-auth/", views.obtain_auth_token),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("graphql/", GraphQLView.as_view(graphiql=True)),
 ]
