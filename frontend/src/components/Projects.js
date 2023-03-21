@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const ItemProject = ({ project, users }) => {
+const ItemProject = ({ project, users, deleteProject }) => {
 
     function changeUsers(user_proj) {
         let us = users.find(item => item.id === user_proj.id)
@@ -27,7 +27,9 @@ const ItemProject = ({ project, users }) => {
                 <td>
                     {usersProject}
                 </td>
-
+                <td>
+                    <button type="button" onClick={() => deleteProject(project.id)}> Delete </button>
+                </td>
             </tr>
         </tbody>
 
@@ -35,7 +37,7 @@ const ItemProject = ({ project, users }) => {
     )
 }
 
-const Projects = ({ projects, users }) => {
+const Projects = ({ projects, users, deleteProject }) => {
     return (
         <table className="tableComponents">
             <thead>
@@ -56,7 +58,9 @@ const Projects = ({ projects, users }) => {
             </thead>
 
 
-            {projects.map((item) => <ItemProject project={item} users={users} />)}
+            {projects.map((item) => <ItemProject project={item} users={users} deleteProject={deleteProject} />)}
+            <Link to="createproject"> Create </Link>
+
         </table>
     )
 }

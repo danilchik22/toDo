@@ -1,6 +1,7 @@
-from rest_framework import generics, viewsets
+from rest_framework import generics, status, viewsets
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .filters import ProjectFilter, TODOFilterDate
 from .models import TODO, Project
@@ -27,6 +28,11 @@ class ProjectModelViewSet(viewsets.ModelViewSet):
         if self.request.method in ["GET"]:
             return ProjectModelSerializer
         return BaseProjectModelSerializer
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class TODOModelViewSet(viewsets.ModelViewSet):

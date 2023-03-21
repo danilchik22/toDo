@@ -12,6 +12,7 @@ import UserList from './components/Users';
 import ProjectDetail from './components/ProjectDetail';
 import Login from './components/Login';
 import Cookies from 'universal-cookie';
+import ProjectForm from './components/ProjectForm';
 
 
 class App extends React.Component {
@@ -104,6 +105,26 @@ class App extends React.Component {
     )
   }
 
+  deleteProject(id) {
+    const headers = this.getHeaders()
+    axios.delete(`http://127.0.0.1:8000/api/projects/${id}`, { headers })
+      .then(response => {
+        this.setState({ projects: this.state.projects.filter((item) => item.id !== id) })
+      })
+  }
+
+  createProject(projectName, projectUrl, user_proj) {
+    const headers = this.getHeaders()
+    const data = { name: projectName, url: projectUrl, users: user_proj }
+    axios.post("http://127.0.0.1:8000/api/projects/", data, { headers })
+      .then(response => {
+        let new_project = response.data
+        let users = this.state.users.filter((item) => new_project.users.includes(item.id))
+        new_project.users = users
+        this.setState({ projects: [...this.state.books, new_project] })
+      })
+  }
+
   componentDidMount() {
     this.getTokenFromCookie()
   }
@@ -116,9 +137,10 @@ class App extends React.Component {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Main nameuser={this.state.nameuser} year={this.state.year} auth={() => this.isAuthenticated()} logout={() => this.logout()} />}>
-              <Route path="projects" element={<Projects users={this.state.users} projects={this.state.projects} />}>
-                <Route path="projects/:id" element={<ProjectDetail projects={this.state.projects} users={this.state.users} />} />
+              <Route path="projects" element={<Projects users={this.state.users} projects={this.state.projects} deleteProject={(id) => this.deleteProject(id)} />}>
+                <Route path=":id/" element={<ProjectDetail projects={this.state.projects} users={this.state.users} />} />
               </Route>
+              <Route path="createproject/" element={<ProjectForm users={this.state.users} createProject={(projectName, projecturl, users) => this.createProject(projectName, projecturl, users)} />} />
               <Route path="login" element={<Login auth={() => this.isAuthenticated()} get_token={(username, password) => this.getToken(username, password)} />} />
               <Route path="users" element={<UserList users={this.state.users} />} />
               <Route path="todos" element={<ToDoList users={this.state.users} todos={this.state.todos} projects={this.state.projects} />} />
